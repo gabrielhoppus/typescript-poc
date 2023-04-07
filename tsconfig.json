@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist",
+        "esModuleInterop": true,
+        "baseUrl": "src",
+        "module": "es6",
+        "moduleResolution": "Node",
+        "strict": true
+    },
+    "ts-node": {
+        "esm": true
+    }
+}
