@@ -19,7 +19,7 @@ export type NewLogin = {
 }
 
 export type checkId = {
-    id: number,
+    id: string,
 }
 
 

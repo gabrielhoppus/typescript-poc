@@ -1,11 +1,14 @@
 import { Router } from "express";
-import userController from "../controllers/user.controller.js"
+import { createUser, loginUser, getUsers, deleteUser } from "../controllers/user.controller.js"
+import { validateSchema } from "middlewares/validateSchema.middleware.js";
+import { loginSchema, userSchema } from "schemas/user.schema.js";
 
 const userRoutes = Router();
 
-userRoutes.post('/signup', userController.createUser);
-userRoutes.put('/signin', userController.loginUser);
-userRoutes.get('/', userController.getUsers);
-userRoutes.delete('/delete', userController.deleteUser);
+userRoutes
+    .post('/signup', validateSchema(userSchema), createUser)
+    .put('/signin', validateSchema(loginSchema), loginUser)
+    .get('/', getUsers)
+    .delete('/delete/:id', deleteUser)
 
-export default userRoutes;
+export default userRoutes; 

@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { NewLogin, NewUser, checkId } from "protocols/user.protocol";
 
 
-async function createUser(req: Request, res: Response, next: NextFunction) {
+export async function createUser(req: Request, res: Response, next: NextFunction) {
     const { name, email, password } = req.body as NewUser;
     try {
         await userService.create({ name, email, password });
@@ -13,7 +13,7 @@ async function createUser(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-async function getUsers(req: Request, res: Response, next: NextFunction) {
+export async function getUsers(req: Request, res: Response, next: NextFunction) {
     try {
         const users = await userService.read();
 
@@ -23,7 +23,7 @@ async function getUsers(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-async function loginUser(req: Request, res: Response, next: NextFunction) {
+export async function loginUser(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body as NewLogin;
     try {
         const token = await userService.update({ email, password });
@@ -34,19 +34,12 @@ async function loginUser(req: Request, res: Response, next: NextFunction) {
     }
 }
 
-async function deleteUser(req: Request, res: Response, next: NextFunction) {
-    const { id } = req.body as checkId;
+export async function deleteUser(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params as checkId;
     try {
         await userService.deleteUser(id)
         return res.sendStatus(204)
     } catch (err) {
         next(err);
     }
-}
-
-export default {
-    createUser,
-    getUsers,
-    loginUser,
-    deleteUser
 }

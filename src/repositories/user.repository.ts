@@ -26,14 +26,14 @@ async function loginUser(token: string, id: number): Promise<QueryResult<NewLogi
     [token, id]);
 }
 
-async function findById(id: number) : Promise<QueryResult<checkId>>{
+async function findById(id: string) : Promise<QueryResult<checkId>>{
     return await db.query(
         `SELECT * FROM users WHERE id=$1`,
         [id]
     )
 }
 
-async function deleteUser(id: number){
+async function deleteUser(id: string){
     return await db.query(`DELETE FROM users WHERE id=$1`,
     [id]);
 }

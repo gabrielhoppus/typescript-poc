@@ -26,7 +26,7 @@ async function update({ email, password }: NewLogin) {
     } = await userRepository.findByEmail(email);
     if (!rowCount) throw errors.invalidCredentialsError();
 
-    const validPassword = bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) throw errors.invalidCredentialsError();
 
     if (!user.token) {
@@ -36,7 +36,7 @@ async function update({ email, password }: NewLogin) {
     }
 }
 
-async function deleteUser(id: number){
+async function deleteUser(id: string){
     const { rowCount } = await userRepository.findById(id);
     if (!rowCount) throw errors.notFoundError();
 
