@@ -1,42 +1,56 @@
 import { NewUser, UserEntity, NewLogin, CheckEmail, checkId } from "protocols/user.protocol.js";
-import { db } from "../config/database.connection.js";
-import { QueryResult } from "pg";
+import prisma from "config/database.connection.js";
 
 
-async function findByEmail(email : string) : Promise<QueryResult<CheckEmail>>{
-    return await db.query(
-        `SELECT * FROM users WHERE email=$1`,
-        [email]
-    )
+async function findByEmail(email: string) {
+    return await prisma.users.findUnique({
+        where: {
+            email
+        }
+    })
 }
 
-async function createUser({ name, email, password } : NewUser) : Promise<QueryResult<NewUser>> {
-    return await db.query(
-        `INSERT INTO users (name, email, password) VALUES ($1, $2, $3);`,
-        [name, email, password]
-    );
+async function createUser( user : NewUser) {
+    return await prisma.users.create({
+        data: user
+    });
 }
 
-async function findUsers() : Promise<QueryResult<UserEntity>>{
-    return await db.query(`SELECT id, name FROM users;`)
-}
+    async function findUsers() {
+        return await prisma.users.findMany({
+            select: {
+                id: true,
+                name: true,
+            }
+        });
+    }
 
-async function loginUser(token: string, id: number): Promise<QueryResult<NewLogin>>{
-    return await db.query(`UPDATE users SET token=$1 WHERE id=$2;`,
-    [token, id]);
-}
+    async function loginUser(token: string, id: number) {
+        return await prisma.users.update({
+            where: {
+                id,
+            },
+            data: {
+                token,
+            }
+        })
+    }
 
-async function findById(id: string) : Promise<QueryResult<checkId>>{
-    return await db.query(
-        `SELECT * FROM users WHERE id=$1`,
-        [id]
-    )
-}
+    async function findById(id: number) {
+        return await prisma.users.findUnique({
+            where: {
+                id,
+            }
+        })
+    }
 
-async function deleteUser(id: string){
-    return await db.query(`DELETE FROM users WHERE id=$1`,
-    [id]);
-}
+    async function deleteUser(id: number) {
+        return await prisma.users.delete({
+            where: {
+                id,
+            }
+        })
+    }
 
 export const userRepository = {
     findByEmail,

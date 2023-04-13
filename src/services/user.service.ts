@@ -6,25 +6,22 @@ import { NewUser, NewLogin } from "protocols/user.protocol.js";
 import 'dotenv/config';
 
 async function create({ name, email, password }: NewUser) {
-    const { rowCount } = await userRepository.findByEmail(email);
-    if (rowCount) throw errors.duplicatedEmailError(email);
+    const checkEmail = await userRepository.findByEmail(email);
+    if (checkEmail) throw errors.duplicatedEmailError(email);
 
     const hashPassword: string = await bcrypt.hash(password, 10)
     await userRepository.createUser({ name, email, password: hashPassword })
 }
 
 async function read() {
-    const { rows, rowCount } = await userRepository.findUsers();
-    if (!rowCount) throw errors.notFoundError();
-    return rows;
+    const users = await userRepository.findUsers();
+    if (!users) throw errors.notFoundError();
+    return users;
 }
 
 async function update({ email, password }: NewLogin) {
-    const {
-        rowCount,
-        rows: [user],
-    } = await userRepository.findByEmail(email);
-    if (!rowCount) throw errors.invalidCredentialsError();
+    const user = await userRepository.findByEmail(email);
+    if (!user) throw errors.invalidCredentialsError();
 
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) throw errors.invalidCredentialsError();
@@ -37,10 +34,11 @@ async function update({ email, password }: NewLogin) {
 }
 
 async function deleteUser(id: string){
-    const { rowCount } = await userRepository.findById(id);
-    if (!rowCount) throw errors.notFoundError();
+    const userId = parseInt(id)
+    const user = await userRepository.findById(userId);
+    if (!user) throw errors.notFoundError();
 
-    await userRepository.deleteUser(id);
+    await userRepository.deleteUser(userId);
 }
 
 export default {
