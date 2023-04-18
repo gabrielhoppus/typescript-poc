@@ -1,11 +1,22 @@
 {
     "compilerOptions": {
-        "outDir": "./dist",
+        "outDir": "dist",
         "esModuleInterop": true,
+        "noImplicitAny": true,
         "baseUrl": "src",
         "module": "es6",
         "moduleResolution": "Node",
-        "strict": true
+        "strict": true,
+        "paths": {
+            "@/*": [
+                "*"
+            ]
+        },
+        "plugins": [
+            {
+                "transform": "typescript-transform-paths"
+            }
+        ]
     },
     "ts-node": {
         "esm": true

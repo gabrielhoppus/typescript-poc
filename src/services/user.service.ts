@@ -1,25 +1,25 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import errors from "../errors/index.js";
-import { userRepository } from "../repositories/user.repository.js"
-import { NewUser, NewLogin } from "protocols/user.protocol.js";
-import 'dotenv/config';
+import { userRepository } from "@/repositories/user.repository.js"
+import { NewUser, NewLogin } from "@/protocols/user.protocol.js";
 
-async function create({ name, email, password }: NewUser) {
+
+async function createUser({ name, email, password }: NewUser) {
     const checkEmail = await userRepository.findByEmail(email);
-    if (checkEmail) throw errors.duplicatedEmailError(email);
+    if (checkEmail) throw errors.duplicatedEmailError();
 
     const hashPassword: string = await bcrypt.hash(password, 10)
     await userRepository.createUser({ name, email, password: hashPassword })
 }
 
-async function read() {
+async function findUsers() {
     const users = await userRepository.findUsers();
     if (!users) throw errors.notFoundError();
     return users;
 }
 
-async function update({ email, password }: NewLogin) {
+async function loginUser({ email, password }: NewLogin) {
     const user = await userRepository.findByEmail(email);
     if (!user) throw errors.invalidCredentialsError();
 
@@ -42,8 +42,8 @@ async function deleteUser(id: string){
 }
 
 export default {
-    create,
-    read,
-    update,
+    createUser,
+    findUsers,
+    loginUser,
     deleteUser
 }

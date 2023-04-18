@@ -1,22 +1,37 @@
-function conflictError(message : string[]) {
+function conflictError(message: string[]) {
     return {
         name: "ConflictError",
         message,
     };
 }
 
-function duplicatedEmailError(email : string) {
+export function invalidDataError(details: string[]) {
+    return {
+        name: 'InvalidDataError',
+        message: 'Invalid data',
+        details,
+    };
+}
+
+function duplicatedTitleError(title: string) {
     return {
         name: "DuplicatedEmailError",
         message: "There is already an user with given email",
-        email,
+        title,
     };
 }
 
 function duplicatedError() {
     return {
         name: "DuplicatedError",
-        message: "There is already an user with given email or crm",
+        message: "There is already an user with given title and release date",
+    };
+}
+
+function duplicatedEmailError() {
+    return {
+        name: "DuplicatedError",
+        message: "There is already an user with given title and release date",
     };
 }
 
@@ -43,9 +58,11 @@ function invalidCredentialsError() {
 
 export default {
     conflictError,
-    duplicatedEmailError,
+    duplicatedTitleError,
     unauthorizedError,
     notFoundError,
     invalidCredentialsError,
     duplicatedError,
+    invalidDataError,
+    duplicatedEmailError
 };

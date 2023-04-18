@@ -97,19 +97,18 @@ Response - `204 No Content`
 
 </details>
 
-<!---
+
 ### Review Routes
 
 <details>
-<summary><code>POST</code> <code>/reviews</code> - Authenticated Route</summary>
+<summary><code>POST</code> <code>/reviews/add/:gameid?userid=</code></summary>
 
 Body
 
 ```json
 {
-	"rating": 6.5,
-	"review": "This game is Ok",
-	"game": "Castlevania: Rondo of Blood"
+  "review": "Meh",
+	"grade": 6.5,
 }
 ```
 
@@ -120,9 +119,8 @@ Response - `201 CREATED`
 	"id": 3,
 	"user_id": 1,
 	"game_id": 2,
-	"rating": "6.5",
-	"review": "This game is Ok",
-	"created_at": "2023-04-09T19:20:24.755Z"
+	"grade": "6.5",
+	"review": "Meh",
 }
 ```
 
@@ -133,39 +131,25 @@ Response - `201 CREATED`
 <details>
 <summary><code>GET</code> <code>/reviews</code></summary>
 
-Query Params:
-| Key | Type | Data type | Description |
-| --- | --- | --- | --- |
-| user | Optional| string | User name |
-| game |  Optional | string | Game name |
-
 
 Response - `200 OK`
 
 ```json
 [
-    {
-        "id": 3,
-        "username_id": 1,
-        "username": "John Doe",
-        "picture_url": "https://picsum.photos/300/300",
-        "game": "Castlevania: Rondo of Blood",
-        "rating": "6.5",
-        "review_text": "This game is Ok",
-        "comments": [
-            {
-                "id": 4,
-                "username_id": 2,
-                "username": "Caio",
-                "picture_url": null,
-                "comment_text": "Good Review"
-            }
-        ]
+      {
+    "id": 1,
+    "game_id": 4505,
+    "user_id": 1,
+    "review": "teste",
+    "grade": "9.5",
+    "users": {
+      "name": "gabe"
     }
 ]
 ```
 </details>
 
+<!---
 ### Comment Routes
 
 <details>
@@ -231,13 +215,13 @@ Response - `204 NO CONTENT`
 - [x] Login User
 - [x] Delete User
 - [x] List Users
-
+- [x] Create Review
+- [x] List Reviews
+- [x] List Games
+- [x] Add Games
 
 ## Planned Features
 
-- [ ] Create Review
-- [ ] List Reviews
 - [ ] Delete Reviews
-- [ ] List Games
 - [ ] Get Game Scores
 - [ ] Get Game Average Score

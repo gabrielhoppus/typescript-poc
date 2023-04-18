@@ -6,7 +6,7 @@ import { NewLogin, NewUser, checkId } from "protocols/user.protocol";
 export async function createUser(req: Request, res: Response, next: NextFunction) {
     const { name, email, password } = req.body as NewUser;
     try {
-        await userService.create({ name, email, password });
+        await userService.createUser({ name, email, password });
         return res.sendStatus(201);
     } catch (err) {
         next(err);
@@ -15,9 +15,9 @@ export async function createUser(req: Request, res: Response, next: NextFunction
 
 export async function getUsers(req: Request, res: Response, next: NextFunction) {
     try {
-        const users = await userService.read();
+        const users = await userService.findUsers();
 
-        return res.send({ users })
+        return res.send(users)
     } catch (err) {
         next(err);
     }
@@ -26,7 +26,7 @@ export async function getUsers(req: Request, res: Response, next: NextFunction) 
 export async function loginUser(req: Request, res: Response, next: NextFunction) {
     const { email, password } = req.body as NewLogin;
     try {
-        const token = await userService.update({ email, password });
+        const token = await userService.loginUser({ email, password });
 
         return res.send({ token })
     } catch (err) {
