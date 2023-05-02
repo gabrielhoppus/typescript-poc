@@ -1,6 +1,6 @@
-import userService from "services/user.service.js";
+import userService from "@/services/user.service";
 import { Request, Response, NextFunction } from "express";
-import { NewLogin, NewUser, checkId } from "protocols/user.protocol";
+import { NewLogin, NewUser, checkId } from "@/protocols/user.protocol";
 
 
 export async function createUser(req: Request, res: Response, next: NextFunction) {
@@ -14,13 +14,8 @@ export async function createUser(req: Request, res: Response, next: NextFunction
 }
 
 export async function getUsers(req: Request, res: Response, next: NextFunction) {
-    try {
         const users = await userService.findUsers();
-
         return res.send(users)
-    } catch (err) {
-        next(err);
-    }
 }
 
 export async function loginUser(req: Request, res: Response, next: NextFunction) {
@@ -28,7 +23,7 @@ export async function loginUser(req: Request, res: Response, next: NextFunction)
     try {
         const token = await userService.loginUser({ email, password });
 
-        return res.send({ token })
+        return res.status(200).send({ token })
     } catch (err) {
         next(err);
     }

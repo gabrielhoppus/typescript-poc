@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { addGame, getGames } from "@/controllers/game.controller.js";
-import { validateSchema } from "@/middlewares/validateSchema.middleware.js";
-import { gameSchema } from "@/schemas/game.schema.js";
+import { addGame, getGames } from "@/controllers/game.controller";
+import { validateSchema } from "@/middlewares/validateSchema.middleware";
+import { gameSchema } from "@/schemas/game.schema";
 
 const gameRoutes = Router();
 

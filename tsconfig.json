@@ -4,8 +4,9 @@
         "esModuleInterop": true,
         "noImplicitAny": true,
         "baseUrl": "src",
-        "module": "es6",
+        "module": "CommonJS",
         "moduleResolution": "Node",
+        "rootDirs": ["src", "tests"],
         "strict": true,
         "paths": {
             "@/*": [

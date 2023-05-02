@@ -23,14 +23,14 @@ function duplicatedTitleError(title: string) {
 
 function duplicatedError() {
     return {
-        name: "DuplicatedError",
+        name: "DuplicatedGameError",
         message: "There is already an user with given title and release date",
     };
 }
 
 function duplicatedEmailError() {
     return {
-        name: "DuplicatedError",
+        name: "DuplicatedEmailError",
         message: "There is already an user with given title and release date",
     };
 }

@@ -1,4 +1,4 @@
-import err from "../errors/index.js";
+import err from "@/errors/index";
 import joi from "joi";
 import { Request, Response, NextFunction } from "express";
 

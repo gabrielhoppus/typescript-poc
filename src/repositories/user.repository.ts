@@ -1,5 +1,5 @@
-import { NewUser, UserEntity, NewLogin, CheckEmail, checkId } from "protocols/user.protocol.js";
-import prisma from "config/database.connection.js";
+import { NewUser } from "@/protocols/user.protocol";
+import prisma from "@/config/database.connection";
 
 
 async function findByEmail(email: string) {
@@ -52,7 +52,7 @@ async function createUser( user : NewUser) {
         })
     }
 
-export const userRepository = {
+const userRepository = {
     findByEmail,
     createUser,
     findUsers,
@@ -60,3 +60,5 @@ export const userRepository = {
     deleteUser,
     findById,
 }
+
+export default userRepository;

@@ -1,4 +1,4 @@
-import prisma from "config/database.connection.js";
+import prisma from "@/config/database.connection";
 
 async function findAllReviews(){
     return await prisma.reviews.findMany({

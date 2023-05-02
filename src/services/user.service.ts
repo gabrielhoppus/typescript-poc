@@ -1,13 +1,14 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import errors from "../errors/index.js";
-import { userRepository } from "@/repositories/user.repository.js"
-import { NewUser, NewLogin } from "@/protocols/user.protocol.js";
+import errors from "@/errors/index";
+import userRepository from "@/repositories/user.repository";
+import { NewUser, NewLogin } from "@/protocols/user.protocol";
 
 
 async function createUser({ name, email, password }: NewUser) {
     const checkEmail = await userRepository.findByEmail(email);
     if (checkEmail) throw errors.duplicatedEmailError();
+    
 
     const hashPassword: string = await bcrypt.hash(password, 10)
     await userRepository.createUser({ name, email, password: hashPassword })
@@ -15,7 +16,7 @@ async function createUser({ name, email, password }: NewUser) {
 
 async function findUsers() {
     const users = await userRepository.findUsers();
-    if (!users) throw errors.notFoundError();
+    if (users.length === 0) return [];
     return users;
 }
 

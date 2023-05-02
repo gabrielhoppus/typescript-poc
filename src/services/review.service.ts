@@ -1,5 +1,5 @@
-import errors from "@/errors/index.js";
-import { reviewRepository } from "@/repositories/review.repository.js";
+import errors from "@/errors/index";
+import { reviewRepository } from "@/repositories/review.repository";
 
 
 type ReviewEntity = {

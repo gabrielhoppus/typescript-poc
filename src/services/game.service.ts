@@ -1,7 +1,7 @@
-import errors from "@/errors/index.js";
-import { request } from '@/utils/request.js';
-import { gameRepository } from "@/repositories/game.repository.js";
-import { GameEntity, ApiEntity } from "@/protocols/game.protocols.js";
+import errors from "@/errors/index";
+import { request } from '@/utils/request';
+import { gameRepository } from "@/repositories/game.repository";
+import { GameEntity, ApiEntity } from "@/protocols/game.protocols";
 
 
 async function getAllGames(){

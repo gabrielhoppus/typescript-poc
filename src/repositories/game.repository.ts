@@ -1,5 +1,4 @@
 import prisma from "@/config/database.connection";
-import { GameEntity } from "@/protocols/game.protocols.js";
 
 
 async function findGame(id: number) {
